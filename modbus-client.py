@@ -1,21 +1,24 @@
+#!/usr/bin/env python3
 from pyModbusTCP.client import ModbusClient
+from time import sleep
+from random import randint
+import sys
 
 hostClient = 'localhost'
 portClient = 502 
-unitID = 1
-initReg = 400
-numofReg = 7
-regs_wr_list = [12,24,32,70,80,90,4]
+initReg = 0
+numofReg = 5
 
 try:
-    client = ModbusClient(hostClient, portClient, unitID)
+    client = ModbusClient(host=hostClient, port=portClient)
 except ValueError:
     print("Error with host or port params")
 
 if client.open():
-    print("Opened")
-    client.write_multiple_registers(initReg,regs_wr_list)
-    regs_rd_list = client.read_holding_registers(initReg, numofReg)
-    print(regs_rd_list)
+    print("Modbus client opened!")
 else:
-    print("Error opening client connection")
+    sys.exit("Error opening Modbus client connection")
+
+while True:
+    client.write_single_register(initReg, randint(0,65534))
+    sleep(0.7)
