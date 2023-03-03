@@ -19,6 +19,6 @@ print("Server is online - CTRL C to exit")
 while True:
     srv_info = server.ServerInfo
     print("The value of register 0 is: " + str(bank.get_holding_registers(regAddr, 1, None)))
-    sleep(0.5)
+    sleep(1)
 
     
